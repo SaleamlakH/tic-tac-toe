@@ -32,3 +32,13 @@ const gameBoard = (function GameBoard() {
 
     return {board, print, addMark, reset};
 })();
+
+
+function Player(name, mark) {
+    let score;
+
+    return {name, mark, score};
+}
+
+const player1 = Player('Sale', 'S');
+const player2 = Player('Rekik', 'R');
