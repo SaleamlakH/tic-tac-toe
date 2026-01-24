@@ -6,6 +6,9 @@ const gameBoard = (function GameBoard() {
         ['', '', ''],
         ['', '', '']
     ];
+
+
+    const getBoard = () => board;
     
     // return the gameBoard object 
     // so other methods can be chained
@@ -30,7 +33,7 @@ const gameBoard = (function GameBoard() {
         console.table(board);
     }
 
-    return {board, print, addMark, reset};
+    return {getBoard, print, addMark, reset};
 })();
 
 function Player(name, mark) {
