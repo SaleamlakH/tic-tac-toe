@@ -55,7 +55,51 @@ function Game(currentPlayer, nextPlayer) {
         ++gameRound;
     }
 
-    return {getCurrentPlayer, playRound};
+    const checkWin = (board, recentMark) => {
+        const row = recentMark.row;
+        const column = recentMark.column;
+
+        const winRow = board[row].every(mark => {
+            return mark === recentMark.mark;
+        });
+
+        const winColumn = board.every((row) => {
+            return row[column] === recentMark.mark;
+        });
+
+        // diagonals drawn from left to right
+        const [
+            winTopBottomDiagonal,
+            winBottomTopDiagonal
+        ] = checkDiagonals(board, recentMark.mark, row, column);
+        
+        return winRow || winColumn || winTopBottomDiagonal || winBottomTopDiagonal;
+    }
+
+    const checkDiagonals = (board, mark, row, column) => {
+
+        // diagonals drawn from left to right
+        let winTopBottomDiagonal = false;
+        let winBottomTopDiagonal = false;
+
+        const test = board.every((row, index) => {
+            return row[index] === mark;
+        });
+
+        if (row === column || row + column === 2) {
+            winTopBottomDiagonal = board.every((row, index) => {
+                return row[index] === mark;
+            });
+
+            winBottomTopDiagonal = board.every((row, index) => {
+                return row[2 - index] === mark;
+            });
+        }
+
+        return [winTopBottomDiagonal, winBottomTopDiagonal];
+    }
+
+    return {getCurrentPlayer, playRound, checkWin};
 }
 
 const player1 = Player('Sale', 'S');
