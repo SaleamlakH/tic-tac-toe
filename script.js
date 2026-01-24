@@ -33,12 +33,30 @@ const gameBoard = (function GameBoard() {
     return {board, print, addMark, reset};
 })();
 
-
 function Player(name, mark) {
     let score;
 
     return {name, mark, score};
 }
 
+function Game(currentPlayer, nextPlayer) {
+    let gameRound = 1;
+
+    const playRound = (gameBoard, cellIndex) => {
+        gameBoard.addMark(currentPlayer.mark, cellIndex);
+
+        // change current player
+        const temp = currentPlayer;
+        currentPlayer = nextPlayer;
+        nextPlayer = temp;
+        
+        ++gameRound;
+    }
+
+    return {currentPlayer, playRound};
+}
+
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
+
+const game = Game(player1, player2);
