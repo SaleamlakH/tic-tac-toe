@@ -102,10 +102,60 @@ function Game(currentPlayer, nextPlayer) {
         return [winTopBottomDiagonal, winBottomTopDiagonal];
     }
 
-    return {getCurrentPlayer, playRound, checkWin};
+    // --- Check for tie game end ---
+
+    const checkTie = (board) => {
+        const rowTie = !isRowPossibleToWin(board);
+        const columnTie = !isColumnPossibleToWin(board);
+        const diagonalTie = !isDiagonalPossibleToWin(board);
+
+        return rowTie && columnTie && diagonalTie;
+    }
+
+    const isRowPossibleToWin = (board) => {
+        return board.some(row => {
+            return row
+                .filter(mark => mark !== '')
+                .every((mark, index, arr) => arr[0] == mark);
+        });
+    }
+
+    const isColumnPossibleToWin = (board) => {
+        const invertedBoard = board.reduce((column, row, index) => {
+            column[0][index] = row[0];
+            column[1][index] = row[1];
+            column[2][index] = row[2];
+
+            return column;
+        }, [[], [], []]);
+
+        return invertedBoard.some(row => {
+            return row
+                .filter(mark => mark !== '')
+                .every((mark, index, arr) => arr[0] == mark);
+        });
+    }
+
+    const isDiagonalPossibleToWin = (board) => {
+        const leftToRightDiagonal = board
+            .map((row, index) => row[index])
+            .filter(mark => mark !== '')
+            .every((mark, index, arr) =>  arr[0] === mark);
+
+        const rightToLeftDiagonal = board
+            .map((row, index) => row[2 - index])
+            .filter(mark => mark !== '')
+            .every((mark, index, arr) => arr[0] === mark);
+
+        return leftToRightDiagonal || rightToLeftDiagonal;
+    }
+
+    return {getCurrentPlayer, playRound, checkWin, checkTie};
 }
 
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
 
 const game = Game(player1, player2);
+const isTie = game.checkTie(gameBoard.getBoard());
+console.log(isTie);
