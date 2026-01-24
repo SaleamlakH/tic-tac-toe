@@ -42,6 +42,8 @@ function Player(name, mark) {
 function Game(currentPlayer, nextPlayer) {
     let gameRound = 1;
 
+    const getCurrentPlayer = () => currentPlayer;
+    
     const playRound = (gameBoard, cellIndex) => {
         gameBoard.addMark(currentPlayer.mark, cellIndex);
 
@@ -49,11 +51,11 @@ function Game(currentPlayer, nextPlayer) {
         const temp = currentPlayer;
         currentPlayer = nextPlayer;
         nextPlayer = temp;
-        
+
         ++gameRound;
     }
 
-    return {currentPlayer, playRound};
+    return {getCurrentPlayer, playRound};
 }
 
 const player1 = Player('Sale', 'S');
