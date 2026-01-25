@@ -51,8 +51,8 @@ function Game(currentPlayer, nextPlayer) {
 
     const getCurrentPlayer = () => currentPlayer;
     
-    const playRound = (gameBoard, cellIndex) => {
-        gameBoard.addMark(currentPlayer.mark, cellIndex);
+    const playRound = (gameBoard, position) => {
+        gameBoard.addMark(currentPlayer.mark, position);
 
         // change current player
         const temp = currentPlayer;
@@ -62,24 +62,21 @@ function Game(currentPlayer, nextPlayer) {
         ++gameRound;
     }
 
-    const checkWin = (board, recentMark) => {
-        const row = recentMark.row;
-        const column = recentMark.column;
-
+    const checkWin = (board, {row, column}) => {
         const winRow = board[row].every(mark => {
-            return mark === recentMark.mark;
+            return mark === currentPlayer.mark;
         });
 
         const winColumn = board.every((row) => {
-            return row[column] === recentMark.mark;
+            return row[column] === currentPlayer.mark;
         });
 
-        const winDiagonal = checkDiagonalWin(board, recentMark.mark, row, column);
+        const winDiagonal = checkDiagonalWin(board, row, column);
         
         return winRow || winColumn || winDiagonal;
     }
 
-    const checkDiagonalWin = (board, mark, row, column) => {
+    const checkDiagonalWin = (board, row, column) => {
 
         // diagonals drawn from left to right
         let winTopBottomDiagonal = false;
@@ -87,11 +84,11 @@ function Game(currentPlayer, nextPlayer) {
 
         if (row === column || row + column === 2) {
             winTopBottomDiagonal = board.every((row, index) => {
-                return row[index] === mark;
+                return row[index] === currentPlayer.mark;
             });
 
             winBottomTopDiagonal = board.every((row, index) => {
-                return row[2 - index] === mark;
+                return row[2 - index] === currentPlayer.mark;
             });
         }
 
