@@ -144,6 +144,10 @@ function Game(currentPlayer, nextPlayer) {
     return {getCurrentPlayer, playRound, checkWin, checkTie};
 }
 
+function logMessage(message) {
+    console.log(message);
+}
+
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
 const position = {row: 0, column: 1};
