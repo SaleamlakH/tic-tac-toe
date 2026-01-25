@@ -11,7 +11,14 @@ const gameBoard = (function GameBoard() {
     
     // return the gameBoard object 
     // so other methods can be chained
-    const addMark = function(mark, {row, column}) {        
+    const addMark = function(mark, {row, column}) {
+        if (board[row][column]) {
+            let message = "The spot is already taken!\nPlease select free spot.";
+            
+            logMessage(message);
+            return this;
+        }
+        
         board[row][column] = mark;
         return this;
     }
@@ -150,8 +157,8 @@ function logMessage(message) {
 
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
-const position = {row: 0, column: 1};
-gameBoard.addMark('X', position).print();
+const position = {row: 0, column: 0};
+gameBoard.addMark('o', position).print();
 
 const game = Game(player1, player2);
 const isTie = game.checkTie(gameBoard.getBoard());
