@@ -81,10 +81,6 @@ function Game(currentPlayer, nextPlayer) {
         let winTopBottomDiagonal = false;
         let winBottomTopDiagonal = false;
 
-        const test = board.every((row, index) => {
-            return row[index] === mark;
-        });
-
         if (row === column || row + column === 2) {
             winTopBottomDiagonal = board.every((row, index) => {
                 return row[index] === mark;
