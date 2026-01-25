@@ -70,12 +70,12 @@ function Game(currentPlayer, nextPlayer) {
             return row[column] === recentMark.mark;
         });
 
-        const winDiagonal = checkDiagonals(board, recentMark.mark, row, column);
+        const winDiagonal = checkDiagonalWin(board, recentMark.mark, row, column);
         
         return winRow || winColumn || winDiagonal;
     }
 
-    const checkDiagonals = (board, mark, row, column) => {
+    const checkDiagonalWin = (board, mark, row, column) => {
 
         // diagonals drawn from left to right
         let winTopBottomDiagonal = false;
