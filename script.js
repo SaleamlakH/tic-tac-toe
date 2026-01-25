@@ -7,14 +7,11 @@ const gameBoard = (function GameBoard() {
         ['', '', '']
     ];
 
-
     const getBoard = () => board;
     
     // return the gameBoard object 
     // so other methods can be chained
-    const addMark = function(mark, index) {
-        const [row, column] = index.split('');
-        
+    const addMark = function(mark, {row, column}) {        
         board[row][column] = mark;
         return this;
     }
@@ -149,6 +146,8 @@ function Game(currentPlayer, nextPlayer) {
 
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
+const position = {row: 0, column: 1};
+gameBoard.addMark('X', position).print();
 
 const game = Game(player1, player2);
 const isTie = game.checkTie(gameBoard.getBoard());
