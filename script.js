@@ -137,17 +137,19 @@ function Game(currentPlayer, nextPlayer) {
     }
 
     const isDiagonalPossibleToWin = (board) => {
-        const leftToRightDiagonal = board
+        
+        // Diagonals draw from left to right
+        const topBottomDiagonal = board
             .map((row, index) => row[index])
             .filter(mark => mark !== '')
             .every((mark, index, arr) =>  arr[0] === mark);
 
-        const rightToLeftDiagonal = board
+        const bottomTopDiagonal = board
             .map((row, index) => row[2 - index])
             .filter(mark => mark !== '')
             .every((mark, index, arr) => arr[0] === mark);
 
-        return leftToRightDiagonal || rightToLeftDiagonal;
+        return topBottomDiagonal || bottomTopDiagonal;
     }
 
     return {getCurrentPlayer, playRound, checkWin, checkTie};
