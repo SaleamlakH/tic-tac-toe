@@ -70,13 +70,9 @@ function Game(currentPlayer, nextPlayer) {
             return row[column] === recentMark.mark;
         });
 
-        // diagonals drawn from left to right
-        const [
-            winTopBottomDiagonal,
-            winBottomTopDiagonal
-        ] = checkDiagonals(board, recentMark.mark, row, column);
+        const winDiagonal = checkDiagonals(board, recentMark.mark, row, column);
         
-        return winRow || winColumn || winTopBottomDiagonal || winBottomTopDiagonal;
+        return winRow || winColumn || winDiagonal;
     }
 
     const checkDiagonals = (board, mark, row, column) => {
@@ -99,7 +95,7 @@ function Game(currentPlayer, nextPlayer) {
             });
         }
 
-        return [winTopBottomDiagonal, winBottomTopDiagonal];
+        return winTopBottomDiagonal || winBottomTopDiagonal;
     }
 
     // --- Check for tie game end ---
