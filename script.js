@@ -160,12 +160,26 @@ function logMessage(message) {
 }
 
 
-// ---- Only added for testing during development ----
+// Game module
+const game = (() => {
+    const player1name = prompt('Enter your name: ', 'rekik');
+    const player2name = prompt('Enter another player name: ', 'ezra');
+    const whoPlaysFirst = prompt(`Who plays first: 1. ${player1name} or 2. ${player2name}`);
 
-// when the page loads
-const player1 = Player('Sale', 'S');
-const player2 = Player('Rekik', 'R');
-const game = Game(player1, player2);
+    if (whoPlaysFirst == 1) {
+        const currentPlayer = Player(player1name, 'X');
+        const nextPlayer = Player(player2name, 'O');
+        
+        return Game(currentPlayer, nextPlayer);
+    } else {
+        const currentPlayer = Player(player2name, 'O');
+        const nextPlayer = Player(player1name, 'X');
+
+        return Game(currentPlayer, nextPlayer);
+    }
+})();
+
+// ---- Only added for testing during development ----
 
 // when a player click a spot
 const position = {row: 0, column: 0}; // spot position
