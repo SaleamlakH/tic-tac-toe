@@ -152,11 +152,12 @@ function logMessage(message) {
     console.log(message);
 }
 
+// when the page loads
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
-const position = {row: 0, column: 0};
-gameBoard.addMark('o', position).print();
-
 const game = Game(player1, player2);
-const isTie = game.checkTie(gameBoard.getBoard());
-console.log(isTie);
+
+// when a player click a spot
+const position = {row: 0, column: 0}; // spot position
+gameBoard.addMark('o', position).print(); // add mark into the board
+let roundResult = game.playRound(gameBoard.getBoard(), position);
