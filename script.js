@@ -51,9 +51,8 @@ function Game(currentPlayer, nextPlayer) {
 
     const getCurrentPlayer = () => currentPlayer;
     
-    const playRound = (gameBoard, position) => {
-        gameBoard.addMark(currentPlayer.mark, position);
-
+    const playRound = (board, position) => {
+        
         swapPlayers();
         ++gameRound;
     }
