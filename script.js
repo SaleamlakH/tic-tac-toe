@@ -179,21 +179,34 @@ const game = (() => {
     }
 })();
 
-// ---- Only added for testing during development ----
 
-// when a player click a spot
-const position = {row: 0, column: 0}; // spot position
-gameBoard.addMark(game.getCurrentPlayer().mark, position).print(); // add mark into the board
+// IIFE which plays created game
+(function playGame() {
+    let isGameOver = false;
+    while (isGameOver) {
+        console.clear();
+        gameBoard.print();
+        let position = prompt('Enter row and column of a spot, e,g. 11:', 11);
+        
+        const [row, column] = position.split('');
+        position = {row, column};
+        gameBoard.addMark(game.getCurrentPlayer().mark, position);
+        const roundResult = game.playRound(gameBoard.getBoard(), position);
 
-// roundResult = {win, tie}
-let roundResult = game.playRound(gameBoard.getBoard(), position);
+        if (roundResult.win) {
+            const message = `${game.getCurrentPlayer().name} Wins!`;
+            console.clear();
+            gameBoard.print();
+            logMessage(message);
+            isGameOver = true;
+        } 
 
-if (roundResult.win) {
-    const message = `${game.getCurrentPlayer().name} Wins!`;
-    logMessage(message);
-} 
-
-if (roundResult.tie) {
-    const message = `The game is tied! Will never have winner!`;
-    logMessage(message);
-}
+        if (roundResult.tie) {
+            const message = `The game is tied!`;
+            console.clear();
+            gameBoard.print();
+            logMessage(message);
+            isGameOver = true;
+        }
+    }
+})(game); 
