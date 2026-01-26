@@ -54,12 +54,13 @@ function Game(currentPlayer, nextPlayer) {
     const playRound = (gameBoard, position) => {
         gameBoard.addMark(currentPlayer.mark, position);
 
-        // change current player
+        swapPlayers();
+        ++gameRound;
+    }
+    const swapPlayers = () => {
         const temp = currentPlayer;
         currentPlayer = nextPlayer;
         nextPlayer = temp;
-
-        ++gameRound;
     }
 
     const checkWin = (board, {row, column}) => {
