@@ -52,10 +52,17 @@ function Game(currentPlayer, nextPlayer) {
     const getCurrentPlayer = () => currentPlayer;
     
     const playRound = (board, position) => {
+        const isWinningMove = checkWin(board, position)
+        if (isWinningMove) return {win: true, tie: false};
+
+        const isTie = checkTie(board);
+        if (isTie) return {win: false, tie: true};
 
         swapPlayers();
         ++gameRound;
+        return {win: false, tie: false};
     }
+
     const swapPlayers = () => {
         const temp = currentPlayer;
         currentPlayer = nextPlayer;
@@ -152,6 +159,9 @@ function logMessage(message) {
     console.log(message);
 }
 
+
+// ---- Only added for testing during development ----
+
 // when the page loads
 const player1 = Player('Sale', 'S');
 const player2 = Player('Rekik', 'R');
@@ -159,5 +169,17 @@ const game = Game(player1, player2);
 
 // when a player click a spot
 const position = {row: 0, column: 0}; // spot position
-gameBoard.addMark('o', position).print(); // add mark into the board
+gameBoard.addMark(game.getCurrentPlayer().mark, position).print(); // add mark into the board
+
+// roundResult = {win, tie}
 let roundResult = game.playRound(gameBoard.getBoard(), position);
+
+if (roundResult.win) {
+    const message = `${game.getCurrentPlayer().name} Wins!`;
+    logMessage(message);
+} 
+
+if (roundResult.tie) {
+    const message = `The game is tied! Will never have winner!`;
+    logMessage(message);
+}
