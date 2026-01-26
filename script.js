@@ -52,7 +52,7 @@ function Game(currentPlayer, nextPlayer) {
     const getCurrentPlayer = () => currentPlayer;
     
     const playRound = (board, position) => {
-        
+
         swapPlayers();
         ++gameRound;
     }
@@ -145,7 +145,7 @@ function Game(currentPlayer, nextPlayer) {
         return topBottomDiagonal || bottomTopDiagonal;
     }
 
-    return {getCurrentPlayer, playRound, checkWin, checkTie};
+    return {getCurrentPlayer, playRound};
 }
 
 function logMessage(message) {
