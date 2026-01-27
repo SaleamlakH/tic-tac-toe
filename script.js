@@ -161,7 +161,7 @@ function logMessage(message) {
 
 
 // Game module
-const game = (() => {
+const game = () => {
     const player1name = prompt('Enter your name: ', 'rekik');
     const player2name = prompt('Enter another player name: ', 'ezra');
     const whoPlaysFirst = prompt(`Who plays first: 1. ${player1name} or 2. ${player2name}`);
@@ -177,11 +177,11 @@ const game = (() => {
 
         return Game(currentPlayer, nextPlayer);
     }
-})();
+};
 
 
 // IIFE which plays created game
-(function playGame() {
+function playGame() {
     let isGameOver = false;
     while (isGameOver) {
         console.clear();
@@ -209,4 +209,4 @@ const game = (() => {
             isGameOver = true;
         }
     }
-})(game); 
+}; 
