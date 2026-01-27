@@ -114,3 +114,9 @@ main {
 .control-btn:hover {
     background: hsl(0 0 40);
 }
+
+footer {
+    text-align: center;
+    padding: 1em;
+    background: hsl(0 0 45 / 5%);
+}
