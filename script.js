@@ -157,7 +157,16 @@ function Game(currentPlayer, nextPlayer) {
 
 const boardDisplay = (function BoardDisplay() {
     const gameGridBoard = document.querySelector('.game-grid-board');
+    const playerName = document.querySelector('.player-info .name');
+    const gameRound = document.querySelector('.round-info .round');
+    const gameMessage = document.querySelector('.game-messages');
 
+    const displayGameInfo = (game, message = 'Ongoing') => {
+        playerName.textContent = game.getCurrentPlayer().name;
+        gameRound.textContent = game.getRound();
+        gameMessage.textContent = message;
+    }
+    
     const createCells = (game, gameBoard) => {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -185,7 +194,7 @@ const boardDisplay = (function BoardDisplay() {
         event.currentTarget.textContent = mark;
     }
 
-    return {createCells};
+    return {createCells, displayGameInfo};
 })();
 
 function logMessage(message) {
@@ -194,7 +203,7 @@ function logMessage(message) {
 
 
 // Game module
-const game = () => {
+const game = (() => {
     const player1name = prompt('Enter your name: ', 'rekik');
     const player2name = prompt('Enter another player name: ', 'ezra');
     const whoPlaysFirst = prompt(`Who plays first: 1. ${player1name} or 2. ${player2name}`);
@@ -210,9 +219,10 @@ const game = () => {
 
         return Game(currentPlayer, nextPlayer);
     }
-};
+})();
 
-boardDisplay.createCells(game(), gameBoard);
+boardDisplay.createCells(game, gameBoard)
+boardDisplay.displayGameInfo(game, 'started');
 
 // IIFE which plays created game
 function playGame() {
