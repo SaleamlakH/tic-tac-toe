@@ -158,22 +158,35 @@ function Game(currentPlayer, nextPlayer) {
 const boardDisplay = (function BoardDisplay() {
     const gameGridBoard = document.querySelector('.game-grid-board');
 
-    const createCells = () => {
+    const createCells = (game, gameBoard) => {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const cell = document.createElement('div');
                 
                 cell.setAttribute('data-row', i);
                 cell.setAttribute('data-column', j);
+                attachEventListener(cell, game, gameBoard);
                 gameGridBoard.append(cell);
             }
         }
     }
 
+    const attachEventListener = (cell, game, gameBoard) => {
+        cell.addEventListener('click', (e) => {
+            const mark = game.getCurrentPlayer().mark;
+            const position = e.currentTarget.dataset;
+            
+            gameBoard.addMark(mark, position);
+            drawMark(e, mark);
+        });
+    }
+
+    const drawMark = (event, mark) => {
+        event.currentTarget.textContent = mark;
+    }
+
     return {createCells};
 })();
-
-boardDisplay.createCells();
 
 function logMessage(message) {
     console.log(message);
@@ -199,6 +212,7 @@ const game = () => {
     }
 };
 
+boardDisplay.createCells(game(), gameBoard);
 
 // IIFE which plays created game
 function playGame() {
