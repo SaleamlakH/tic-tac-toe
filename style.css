@@ -158,8 +158,10 @@ form #submit-btn {
     margin: 0.5em 0 1em;
     border: 3px solid hsl(0 0 70);
     
+    box-sizing: content-box;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
 }
 
 .game-grid-board > div {
