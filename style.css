@@ -63,6 +63,56 @@ main {
     align-items: center;
 }
 
+dialog {
+    text-align: center;
+    background: hsl(0 0 7);
+}
+
+.fieldset-container {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+fieldset {
+    font-size: 1.3rem;
+    border: 1px solid hsl(0 0 30 / 0.5);
+}
+
+legend {
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    font-size: 1.5rem;
+    margin-bottom: 1em;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid hsl(0 0 70);
+    display: block;
+}
+
+input:focus {
+    outline: none;
+}
+
+form #submit-btn {
+    color: hsl(0 0 100);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0.2em 2em;
+    margin: 0.5em auto;
+    background: hsl(0 0 30);
+    border: none;
+}
+
+#submit-btn:hover {
+    background: hsl(0 0 40);
+}
+
 .game {
     padding: 0.5em 1em 1em;
     border: 3px solid hsl(0 0 70);
