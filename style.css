@@ -157,6 +157,18 @@ form #submit-btn {
     height: 300px;
     margin: 0.5em 0 1em;
     border: 3px solid hsl(0 0 70);
+    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.game-grid-board > div {
+    font-size: 4rem;
+    border: 1px solid hsl(0 0 70);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .control-btn {
