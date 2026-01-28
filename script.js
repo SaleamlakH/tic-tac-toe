@@ -155,6 +155,26 @@ function Game(currentPlayer, nextPlayer) {
     return {getCurrentPlayer, playRound};
 }
 
+const boardDisplay = (function BoardDisplay() {
+    const gameGridBoard = document.querySelector('.game-grid-board');
+
+    const createCells = () => {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                const cell = document.createElement('div');
+                
+                cell.setAttribute('data-row', i);
+                cell.setAttribute('data-column', j);
+                gameGridBoard.append(cell);
+            }
+        }
+    }
+
+    return {createCells};
+})();
+
+boardDisplay.createCells();
+
 function logMessage(message) {
     console.log(message);
 }
