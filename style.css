@@ -40,7 +40,6 @@ h1 {
     background: hsl(0 0 30);
     padding: 0.4em 1em;
     border: none;
-    border-radius: 10px;
 
     display: flex;
     align-items: center;
@@ -115,7 +114,6 @@ main {
     width: 100%;
     background: hsl(0 0 30);
     border: none;
-    border-radius: 10px;
 }
 
 .control-btn:hover {
