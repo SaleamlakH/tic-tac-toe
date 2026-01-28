@@ -50,6 +50,8 @@ function Game(currentPlayer, nextPlayer) {
     let gameRound = 1;
 
     const getCurrentPlayer = () => currentPlayer;
+
+    const getRound = () => gameRound;
     
     const playRound = (board, position) => {
         const isWinningMove = checkWin(board, position)
@@ -152,7 +154,7 @@ function Game(currentPlayer, nextPlayer) {
         return topBottomDiagonal || bottomTopDiagonal;
     }
 
-    return {getCurrentPlayer, playRound};
+    return {getCurrentPlayer, getRound, playRound};
 }
 
 const boardDisplay = (function BoardDisplay() {
