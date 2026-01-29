@@ -33,11 +33,7 @@ const gameBoard = (function GameBoard() {
         return this;
     }
 
-    const print = () => {
-        console.table(board);
-    }
-
-    return {getBoard, print, addMark, reset};
+    return {getBoard, addMark, reset};
 })();
 
 function Player(name, mark) {
