@@ -184,11 +184,8 @@ const boardDisplay = (function BoardDisplay() {
 
     const attachEventListener = (cell, game, gameBoard) => {
         cell.addEventListener('click', (e) => {
-            const mark = game.getCurrentPlayer().mark;
-            const position = e.currentTarget.dataset;
-            
-            gameBoard.addMark(mark, position);
-            drawMark(e, mark);
+            drawMark(e, game.getCurrentPlayer().mark);
+            playGame(e, game);
         });
     }
 
@@ -245,33 +242,23 @@ function logMessage(message) {
     console.log(message);
 }
 
-// IIFE which plays created game
-function playGame() {
-    let isGameOver = false;
-    while (isGameOver) {
-        console.clear();
-        gameBoard.print();
-        let position = prompt('Enter row and column of a spot, e,g. 11:', 11);
-        
-        const [row, column] = position.split('');
-        position = {row, column};
-        gameBoard.addMark(game.getCurrentPlayer().mark, position);
-        const roundResult = game.playRound(gameBoard.getBoard(), position);
+function playGame(event, game) {
+    const position = event.currentTarget.dataset;
+    
+    gameBoard.addMark(game.getCurrentPlayer().mark, position);
+    
+    const roundResult = game.playRound(gameBoard.getBoard(), position);
+    if (roundResult.win) {
+        const message = `Wins!`;
+        boardDisplay.displayGameInfo(game, message);
+        return;
+    } 
 
-        if (roundResult.win) {
-            const message = `${game.getCurrentPlayer().name} Wins!`;
-            console.clear();
-            gameBoard.print();
-            logMessage(message);
-            isGameOver = true;
-        } 
-
-        if (roundResult.tie) {
-            const message = `The game is tied!`;
-            console.clear();
-            gameBoard.print();
-            logMessage(message);
-            isGameOver = true;
-        }
+    if (roundResult.tie) {
+        const message = `Tied!`;
+        boardDisplay.displayGameInfo(game, message);
+        return;
     }
+
+    boardDisplay.displayGameInfo(game);
 }; 
