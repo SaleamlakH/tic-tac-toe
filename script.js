@@ -238,10 +238,6 @@ const boardDisplay = (function BoardDisplay() {
     };
 })();
 
-function logMessage(message) {
-    console.log(message);
-}
-
 function playGame(event, game) {
     const position = event.currentTarget.dataset;
     
