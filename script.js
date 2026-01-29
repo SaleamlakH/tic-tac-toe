@@ -199,32 +199,51 @@ const boardDisplay = (function BoardDisplay() {
     return {createCells, displayGameInfo};
 })();
 
+(function Dialog() {
+    const dialog = document.querySelector('dialog');
+    const form = document.querySelector('form');
+    const submitBtn = document.querySelector('#submit-btn');
+
+    dialog.showModal();
+
+    submitBtn.addEventListener('click', (e) => {
+        const {player1, player2} = getInputs();
+        const game = Game(player1, player2);
+
+        boardDisplay.createCells(game, gameBoard);
+        boardDisplay.displayGameInfo(game, 'started');
+        
+        dialog.close();
+        
+        const gameDisplay = document.querySelector('.game');
+        gameDisplay.classList.toggle('started');
+
+        e.preventDefault();
+    });
+
+    const getInputs = () => {
+        const formData = [...new FormData(form)];
+        const players = formData.reduce((obj, [key, value]) => {
+            obj[key] = value;
+            return obj;
+        }, {});
+
+        return {
+            player1: {
+                name: players.player1_name,
+                mark: players.player1_mark
+            },
+            player2: {
+                name: players.player2_name,
+                mark: players.player2_mark
+            }
+        };
+    };
+})();
+
 function logMessage(message) {
     console.log(message);
 }
-
-
-// Game module
-const game = (() => {
-    const player1name = prompt('Enter your name: ', 'rekik');
-    const player2name = prompt('Enter another player name: ', 'ezra');
-    const whoPlaysFirst = prompt(`Who plays first: 1. ${player1name} or 2. ${player2name}`);
-
-    if (whoPlaysFirst == 1) {
-        const currentPlayer = Player(player1name, 'X');
-        const nextPlayer = Player(player2name, 'O');
-        
-        return Game(currentPlayer, nextPlayer);
-    } else {
-        const currentPlayer = Player(player2name, 'O');
-        const nextPlayer = Player(player1name, 'X');
-
-        return Game(currentPlayer, nextPlayer);
-    }
-})();
-
-boardDisplay.createCells(game, gameBoard)
-boardDisplay.displayGameInfo(game, 'started');
 
 // IIFE which plays created game
 function playGame() {
