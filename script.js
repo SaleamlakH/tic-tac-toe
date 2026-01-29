@@ -165,20 +165,20 @@ const boardDisplay = (function BoardDisplay() {
         gameMessage.textContent = message;
     }
     
-    const createCells = (game, gameBoard) => {
+    const createCells = (game) => {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const cell = document.createElement('div');
                 
                 cell.setAttribute('data-row', i);
                 cell.setAttribute('data-column', j);
-                attachEventListener(cell, game, gameBoard);
+                attachEventListener(cell, game);
                 gameGridBoard.append(cell);
             }
         }
     }
 
-    const attachEventListener = (cell, game, gameBoard) => {
+    const attachEventListener = (cell, game) => {
         cell.addEventListener('click', (e) => {
             drawMark(e, game.getCurrentPlayer().mark);
             playGame(e, game);
@@ -203,7 +203,7 @@ const boardDisplay = (function BoardDisplay() {
         const {player1, player2} = getInputs();
         const game = Game(player1, player2);
 
-        boardDisplay.createCells(game, gameBoard);
+        boardDisplay.createCells(game);
         boardDisplay.displayGameInfo(game, 'started');
         
         dialog.close();
