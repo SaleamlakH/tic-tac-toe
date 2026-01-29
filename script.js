@@ -1,6 +1,6 @@
 'use strict'
 
-const gameBoard = (function GameBoard() {
+const gameBoard = (function () {
     let board = [
         ['', '', ''],
         ['', '', ''],
@@ -153,7 +153,7 @@ function Game(currentPlayer, nextPlayer) {
     return {getCurrentPlayer, getRound, playRound};
 }
 
-const boardDisplay = (function BoardDisplay() {
+const boardDisplay = (function () {
     const gameGridBoard = document.querySelector('.game-grid-board');
     const playerName = document.querySelector('.player-info .name');
     const gameRound = document.querySelector('.round-info .round');
