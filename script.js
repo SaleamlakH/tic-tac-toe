@@ -165,12 +165,14 @@ const boardDisplay = (function () {
     const gameRound = document.querySelector('.round-info .round');
     const gameMessage = document.querySelector('.game-messages');
     const restartBtn = document.querySelector('.control-btn');
+    const playerInfo = document.querySelector('.player-info');
 
     const attachRestartHandler = (game) => {
         restartBtn.addEventListener('click', () => {
             game.restart();
             gameBoard.reset();
             clean();
+            clearStateStyle();
             displayGameInfo(game, 'Restarted');
         });
     }
@@ -211,7 +213,27 @@ const boardDisplay = (function () {
         })
     }
 
-    return {createCells, drawMark, displayGameInfo, attachRestartHandler};
+    // --- styling for game end and error ---
+    const setStateStyle =(state) => {
+        gameMessage.classList.add(state);
+        if (state == 'win') {
+            playerInfo.classList.add(state);
+        }
+    }
+
+    const clearStateStyle = () => {
+        playerInfo.classList = 'player-info';
+        gameMessage.classList = 'game-messages';
+    }
+
+    return {
+        createCells, 
+        drawMark, 
+        displayGameInfo, 
+        attachRestartHandler,
+        setStateStyle,
+        clearStateStyle
+    };
 })();
 
 (function Dialog() {
@@ -259,10 +281,14 @@ const boardDisplay = (function () {
 
 function playGame(event, game) {
     const position = event.currentTarget.dataset;
-    
+
+    boardDisplay.clearStateStyle();
+
     if (!gameBoard.isFreeCell(position)) {
         let message = 'Already taken';
+        
         boardDisplay.displayGameInfo(game, message);
+        boardDisplay.setStateStyle('error');
         return;
     }
     
@@ -272,13 +298,17 @@ function playGame(event, game) {
     const roundResult = game.playRound(gameBoard.getBoard(), position);
     if (roundResult.win) {
         const message = `Wins!`;
+        
         boardDisplay.displayGameInfo(game, message);
+        boardDisplay.setStateStyle('win');
         return;
     } 
 
     if (roundResult.tie) {
         const message = `Tied!`;
+        
         boardDisplay.displayGameInfo(game, message);
+        boardDisplay.setStateStyle('tie');
         return;
     }
 
