@@ -67,6 +67,12 @@ function Game(currentPlayer, nextPlayer) {
         nextPlayer = temp;
     }
 
+    const restart = () => {
+        gameRound = 1;
+    }
+
+    // --- check win game end ---
+
     const checkWin = (board, {row, column}) => {
         const winRow = board[row].every(mark => {
             return mark === currentPlayer.mark;
@@ -150,7 +156,7 @@ function Game(currentPlayer, nextPlayer) {
         return topBottomDiagonal || bottomTopDiagonal;
     }
 
-    return {getCurrentPlayer, getRound, playRound};
+    return {getCurrentPlayer, getRound, playRound, restart};
 }
 
 const boardDisplay = (function () {
@@ -158,6 +164,16 @@ const boardDisplay = (function () {
     const playerName = document.querySelector('.player-info .name');
     const gameRound = document.querySelector('.round-info .round');
     const gameMessage = document.querySelector('.game-messages');
+    const restartBtn = document.querySelector('.control-btn');
+
+    const attachRestartHandler = (game) => {
+        restartBtn.addEventListener('click', () => {
+            game.restart();
+            gameBoard.reset();
+            clean();
+            displayGameInfo(game, 'Restarted');
+        });
+    }
 
     const displayGameInfo = (game, message = 'Ongoing') => {
         playerName.textContent = game.getCurrentPlayer().name;
@@ -188,7 +204,14 @@ const boardDisplay = (function () {
         event.currentTarget.textContent = mark;
     }
 
-    return {createCells, drawMark, displayGameInfo};
+    const clean = () => {
+        const cells = [...gameGridBoard.children];
+        cells.forEach((cell) => {
+            cell.textContent = '';
+        })
+    }
+
+    return {createCells, drawMark, displayGameInfo, attachRestartHandler};
 })();
 
 (function Dialog() {
@@ -203,6 +226,7 @@ const boardDisplay = (function () {
         const game = Game(player1, player2);
 
         boardDisplay.createCells(game);
+        boardDisplay.attachRestartHandler(game);
         boardDisplay.displayGameInfo(game, 'started');
         
         dialog.close();
