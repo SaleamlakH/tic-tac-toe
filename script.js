@@ -50,8 +50,8 @@ function Game(currentPlayer, nextPlayer) {
     const getRound = () => gameRound;
     
     const playRound = (board, position) => {
-        const isWinningMove = checkWin(board, position)
-        if (isWinningMove) return {win: true, tie: false};
+        const isWinningMove = checkWin(board, position);
+        if (isWinningMove.win) return isWinningMove;
 
         const isTie = checkTie(board);
         if (isTie) return {win: false, tie: true};
@@ -84,14 +84,18 @@ function Game(currentPlayer, nextPlayer) {
 
         const winDiagonal = checkDiagonalWin(board, row, column);
         
-        return winRow || winColumn || winDiagonal;
+        return winRow
+            ? {win: true, trackNum: row, track: 'row'}
+            : winColumn
+            ? {win: true, trackNum: column, track: 'column'}
+            : winDiagonal;
     }
 
     const checkDiagonalWin = (board, row, column) => {
 
         // diagonals drawn from left to right
-        let winTopBottomDiagonal = false;
-        let winBottomTopDiagonal = false;
+        let winTopBottomDiagonal = false; // track number = 0
+        let winBottomTopDiagonal = false; // track number = 1
 
         if (row === column || +row + +column === 2) {
             winTopBottomDiagonal = board.every((row, index) => {
@@ -103,7 +107,9 @@ function Game(currentPlayer, nextPlayer) {
             });
         }
 
-        return winTopBottomDiagonal || winBottomTopDiagonal;
+        return winTopBottomDiagonal
+            ? {win: true, trackNum: 0, track: 'diagonal'}
+            : {win: winBottomTopDiagonal, trackNum: 1, track: 'diagonal'};
     }
 
     // --- Check for tie game end ---
