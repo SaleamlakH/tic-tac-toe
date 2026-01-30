@@ -129,7 +129,8 @@ form #submit-btn {
     gap: 10px 0px;
 }
 
-.player-info .name {
+.player-info .name,
+.player-info .mark {
     text-align: center;
     margin-top: 0.2em;
     background-color: hsl(0 0 12);

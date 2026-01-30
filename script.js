@@ -162,6 +162,7 @@ function Game(currentPlayer, nextPlayer) {
 const boardDisplay = (function () {
     const gameGridBoard = document.querySelector('.game-grid-board');
     const playerName = document.querySelector('.player-info .name');
+    const playerMark = document.querySelector('.player-info .mark');
     const gameRound = document.querySelector('.round-info .round');
     const gameMessage = document.querySelector('.game-messages');
     const restartBtn = document.querySelector('.control-btn');
@@ -179,6 +180,7 @@ const boardDisplay = (function () {
 
     const displayGameInfo = (game, message = 'Ongoing') => {
         playerName.textContent = game.getCurrentPlayer().name;
+        playerMark.textContent = game.getCurrentPlayer().mark;
         gameRound.textContent = game.getRound();
         gameMessage.textContent = message;
     }
