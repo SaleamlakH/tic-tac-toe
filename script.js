@@ -12,15 +12,15 @@ const gameBoard = (function () {
     // return the gameBoard object 
     // so other methods can be chained
     const addMark = function(mark, {row, column}) {
-        if (board[row][column]) {
-            let message = "The spot is already taken!\nPlease select free spot.";
-            
-            logMessage(message);
-            return this;
-        }
-        
         board[row][column] = mark;
         return this;
+    }
+
+    const isFreeCell = ({row, column}) => {
+         if (board[row][column]) {
+            return false;
+        }
+        return true;
     }
 
     const reset = function() {
@@ -33,7 +33,7 @@ const gameBoard = (function () {
         return this;
     }
 
-    return {getBoard, addMark, reset};
+    return {getBoard, addMark, isFreeCell, reset};
 })();
 
 function Player(name, mark) {
@@ -180,7 +180,6 @@ const boardDisplay = (function () {
 
     const attachEventListener = (cell, game) => {
         cell.addEventListener('click', (e) => {
-            drawMark(e, game.getCurrentPlayer().mark);
             playGame(e, game);
         });
     }
@@ -189,7 +188,7 @@ const boardDisplay = (function () {
         event.currentTarget.textContent = mark;
     }
 
-    return {createCells, displayGameInfo};
+    return {createCells, drawMark, displayGameInfo};
 })();
 
 (function Dialog() {
@@ -237,6 +236,13 @@ const boardDisplay = (function () {
 function playGame(event, game) {
     const position = event.currentTarget.dataset;
     
+    if (!gameBoard.isFreeCell(position)) {
+        let message = 'Already taken';
+        boardDisplay.displayGameInfo(game, message);
+        return;
+    }
+    
+    boardDisplay.drawMark(event, game.getCurrentPlayer().mark);
     gameBoard.addMark(game.getCurrentPlayer().mark, position);
     
     const roundResult = game.playRound(gameBoard.getBoard(), position);
