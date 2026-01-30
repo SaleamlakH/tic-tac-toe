@@ -180,6 +180,7 @@ const boardDisplay = (function () {
             gameBoard.reset();
             clean();
             clearStateStyle();
+            clearTrackStyle();
             displayGameInfo(game, 'Restarted');
         });
     }
@@ -234,13 +235,49 @@ const boardDisplay = (function () {
         gameMessage.classList = 'game-messages';
     }
 
+    const styleTrack = ({track, trackNum}) => {
+        if (track === 'diagonal') {
+            styleDiagonal(trackNum);
+            return;
+        }
+
+        // style row and column
+        const selector = `[data-${track}="${trackNum}"`;
+        const cells = gameGridBoard.querySelectorAll(selector);
+        
+        cells.forEach((cell) => {
+            cell.classList.add('win');
+        });
+    }
+
+    const styleDiagonal = (trackNum) => {
+        for (let row = 0; row < 3; row++) {
+            let column = row;
+            if (trackNum === 1) column = 2 - row;
+            
+            const selector = `[data-row='${row}'][data-column='${column}']`;
+            const cell = gameGridBoard.querySelector(selector);
+            
+            cell.classList.add('win');
+        }
+    }
+
+    const clearTrackStyle = () => {
+        const cells = [...gameGridBoard.children];
+
+        cells.forEach((cell) => {
+            cell.classList.remove('win');
+        })
+    }
+
     return {
         createCells, 
         drawMark, 
         displayGameInfo, 
         attachRestartHandler,
         setStateStyle,
-        clearStateStyle
+        clearStateStyle,
+        styleTrack
     };
 })();
 
@@ -309,6 +346,7 @@ function playGame(event, game) {
         
         boardDisplay.displayGameInfo(game, message);
         boardDisplay.setStateStyle('win');
+        boardDisplay.styleTrack(roundResult);
         return;
     } 
 

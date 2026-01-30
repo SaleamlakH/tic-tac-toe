@@ -155,9 +155,10 @@ form #submit-btn {
 
 /* win board style */
 .player-info.win .name {
-    background: hsl(120 100 20);
+    background: hsl(120 100 30);
 }
 
+.game-grid-board > div.win,
 .game-messages.win {
     color: hsl(120 100 40);
 }
