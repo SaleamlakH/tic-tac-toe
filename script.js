@@ -44,10 +44,14 @@ function Player(name, mark) {
 
 function Game(currentPlayer, nextPlayer) {
     let gameRound = 1;
+    let state = 'ongoing';  // may be ongoing or over
 
     const getCurrentPlayer = () => currentPlayer;
 
     const getRound = () => gameRound;
+
+    const getState = () => state;
+    const setState = (value) => state = value;
     
     const playRound = (board, position) => {
         const isWinningMove = checkWin(board, position);
@@ -69,6 +73,7 @@ function Game(currentPlayer, nextPlayer) {
 
     const restart = () => {
         gameRound = 1;
+        state = 'ongoing';
     }
 
     // --- check win game end ---
@@ -162,7 +167,14 @@ function Game(currentPlayer, nextPlayer) {
         return topBottomDiagonal || bottomTopDiagonal;
     }
 
-    return {getCurrentPlayer, getRound, playRound, restart};
+    return {
+        getCurrentPlayer,
+        getRound,
+        playRound,
+        restart,
+        getState,
+        setState
+    };
 }
 
 const boardDisplay = (function () {
@@ -325,6 +337,12 @@ const boardDisplay = (function () {
 })();
 
 function playGame(event, game) {
+    if (game.getState() === 'over') {
+        boardDisplay.displayGameInfo(game, 'It\'s Tied! Play again.');
+        boardDisplay.setStateStyle('error');
+        return
+    }
+
     const position = event.currentTarget.dataset;
 
     boardDisplay.clearStateStyle();
@@ -344,6 +362,8 @@ function playGame(event, game) {
     if (roundResult.win) {
         const message = `Wins!`;
         
+        game.setState('over');
+
         boardDisplay.displayGameInfo(game, message);
         boardDisplay.setStateStyle('win');
         boardDisplay.styleTrack(roundResult);
@@ -352,6 +372,8 @@ function playGame(event, game) {
 
     if (roundResult.tie) {
         const message = `Tied!`;
+        
+        game.setState('over');
         
         boardDisplay.displayGameInfo(game, message);
         boardDisplay.setStateStyle('tie');
