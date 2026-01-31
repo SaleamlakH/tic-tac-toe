@@ -37,9 +37,7 @@ const gameBoard = (function () {
 })();
 
 function Player(name, mark) {
-    let score;
-
-    return {name, mark, score};
+    return {name, mark};
 }
 
 function Game(currentPlayer, nextPlayer) {
