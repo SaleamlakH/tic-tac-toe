@@ -322,14 +322,8 @@ const boardDisplay = (function () {
         }, {});
 
         return {
-            player1: {
-                name: players.player1_name,
-                mark: players.player1_mark
-            },
-            player2: {
-                name: players.player2_name,
-                mark: players.player2_mark
-            }
+            player1: Player(players.player1_name, players.player1_mark),
+            player2: Player(players.player2_name, players.player2_mark)
         };
     };
 })();
